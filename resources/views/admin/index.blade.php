@@ -1,11 +1,10 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="id">
 
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Admin Dashboard</title>
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
+    <title>Admin Panel Pertanian</title>
     <style>
     * {
         margin: 0;
@@ -15,424 +14,331 @@
     }
 
     :root {
-        --primary-color: #4723D9;
-        --light-color: #f6f6f9;
-        --dark-color: #363949;
-        --danger-color: #ff7782;
-        --success-color: #41f1b6;
+        /* Warna utama yang lebih lembut */
+        --primary-color: #3B82F6;
+        --secondary-color: #2563EB;
+        --accent-color: #93C5FD;
+        --hover-color: #1D4ED8;
+
+        /* Background yang lebih nyaman di mata */
+        --bg-color: #F8FAFC;
+        --sidebar-bg: #1E293B;
+        --card-bg: #ffffff;
+
+        /* Teks yang lebih kontras tapi tetap nyaman */
+        --text-light: #F1F5F9;
+        --text-primary: #0F172A;
+        --text-secondary: #475569;
+
+        /* Warna pendukung */
+        --border-color: #E2E8F0;
+        --success-color: #059669;
+        --danger-color: #DC2626;
+    }
+
+    body {
+        display: flex;
+        background-color: var(--bg-color);
+        min-height: 100vh;
     }
 
     .sidebar {
-        height: 100vh;
-        width: 250px;
+        width: 280px;
+        background: linear-gradient(180deg, var(--sidebar-bg) 0%, #334155 100%);
+        padding: 20px;
+        box-shadow: 4px 0 15px rgba(0, 0, 0, 0.08);
         position: fixed;
-        left: 0;
-        top: 0;
-        padding: 1rem;
-        background-color: white;
-        box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+        height: 100vh;
+        overflow-y: auto;
     }
 
-    .logo {
+    .logo-container {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding-bottom: 1rem;
-        border-bottom: 1px solid var(--light-color);
+        padding: 20px 15px;
+        margin-bottom: 30px;
+        border-bottom: 1px solid rgba(255, 255, 255, 0.1);
     }
 
-    .logo img {
-        width: 40px;
-        height: 40px;
+    .logo-container img {
+        width: 45px;
+        height: 45px;
+        margin-right: 15px;
     }
 
-    .menu-items {
-        margin-top: 2rem;
+    .logo-container h2 {
+        color: var(--text-light);
+        font-size: 1.6rem;
+        font-weight: 600;
+        background: linear-gradient(45deg, #93C5FD, #60A5FA);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
     }
 
-    .menu-items a {
+    .nav-section {
+        margin-bottom: 25px;
+    }
+
+    .nav-title {
+        color: var(--accent-color);
+        font-size: 0.9rem;
+        text-transform: uppercase;
+        letter-spacing: 1px;
+        padding: 0 15px;
+        margin-bottom: 15px;
+        font-weight: 600;
+    }
+
+    .menu-item {
         display: flex;
         align-items: center;
-        gap: 1rem;
-        padding: 0.8rem;
-        color: var(--dark-color);
-        text-decoration: none;
+        padding: 12px 15px;
+        margin-bottom: 8px;
+        cursor: pointer;
+        border-radius: 12px;
         transition: all 0.3s ease;
+        color: var(--text-light);
+        opacity: 0.85;
     }
 
-    .menu-items a:hover {
-        background-color: var(--light-color);
-        border-radius: 5px;
+    .menu-item:hover {
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.15), rgba(37, 99, 235, 0.15));
+        opacity: 1;
+        transform: translateX(5px);
     }
 
-    .menu-items a.active {
-        background-color: var(--primary-color);
+    .menu-item.active {
+        background: linear-gradient(90deg, rgba(59, 130, 246, 0.2), rgba(37, 99, 235, 0.2));
         color: white;
-        border-radius: 5px;
+        opacity: 1;
+        box-shadow: 0 4px 15px rgba(59, 130, 246, 0.1);
+    }
+
+    .menu-item img {
+        width: 20px;
+        margin-right: 12px;
+    }
+
+    .menu-item span {
+        font-weight: 500;
+    }
+
+    .menu-item .menu-title {
+        margin-left: 12px;
+        font-size: 1rem;
     }
 
     .main-content {
-        margin-left: 250px;
-        padding: 2rem;
+        flex: 1;
+        padding: 25px;
+        margin-left: 280px;
     }
 
-    .header {
+    .dashboard-header {
+        background: linear-gradient(135deg, var(--primary-color), var(--secondary-color));
+        padding: 25px;
+        border-radius: 16px;
         display: flex;
         justify-content: space-between;
         align-items: center;
-        margin-bottom: 2rem;
+        margin-bottom: 25px;
+        box-shadow: 0 4px 20px rgba(59, 130, 246, 0.15);
     }
 
-    .search-box {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-        padding: 0.5rem 1rem;
-        background-color: var(--light-color);
-        border-radius: 5px;
+    .dashboard-header h2 {
+        color: white;
+        font-size: 1.8rem;
     }
 
-    .search-box input {
+    .tambah-data {
+        background-color: rgba(255, 255, 255, 0.95);
         border: none;
-        background: none;
-        outline: none;
-    }
-
-    .user-profile {
+        padding: 12px 24px;
+        border-radius: 12px;
+        cursor: pointer;
+        color: var(--primary-color);
+        text-decoration: none;
         display: flex;
         align-items: center;
-        gap: 1rem;
+        transition: all 0.3s ease;
+        font-weight: 600;
+        box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
     }
 
-    .user-profile img {
-        width: 40px;
-        height: 40px;
-        border-radius: 50%;
-    }
-
-    .cards {
-        display: grid;
-        grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-        gap: 1.5rem;
-        margin-bottom: 2rem;
-    }
-
-    .card {
+    .tambah-data:hover {
         background-color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        transform: translateY(-2px);
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.12);
     }
 
-    .table-container {
-        background-color: white;
-        padding: 1.5rem;
-        border-radius: 10px;
-        box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    .content-box {
+        background-color: var(--card-bg);
+        border-radius: 16px;
+        padding: 25px;
+        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.03);
+    }
+
+    .content-box h3 {
+        color: var(--text-primary);
+        margin-bottom: 25px;
+        font-size: 1.4rem;
+        font-weight: 600;
     }
 
     table {
         width: 100%;
-        border-collapse: collapse;
+        border-collapse: separate;
+        border-spacing: 0 10px;
     }
 
-    th,
-    td {
-        padding: 1rem;
-        text-align: left;
-        border-bottom: 1px solid var(--light-color);
+    table th {
+        background: linear-gradient(90deg, var(--primary-color), var(--secondary-color));
+        color: white;
+        padding: 16px;
+        font-weight: 500;
+    }
+
+    th:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    th:last-child {
+        border-radius: 0 8px 8px 0;
+    }
+
+    table td {
+        padding: 16px;
+        color: var(--text-secondary);
+        border: 1px solid var(--border-color);
+        background-color: var(--card-bg);
+    }
+
+    tr:hover td {
+        background-color: #F8FAF9;
+    }
+
+    td:first-child {
+        border-radius: 8px 0 0 8px;
+    }
+
+    td:last-child {
+        border-radius: 0 8px 8px 0;
     }
 
     .action-buttons {
         display: flex;
-        gap: 0.5rem;
+        gap: 8px;
     }
 
-    .btn {
-        padding: 0.5rem 1rem;
-        border: none;
-        border-radius: 5px;
-        cursor: pointer;
+    .action-btn {
+        padding: 8px 16px;
+        border-radius: 8px;
+        font-weight: 500;
         transition: all 0.3s ease;
     }
 
-    .btn-primary {
+    .edit-btn {
         background-color: var(--primary-color);
-        color: white;
     }
 
-    .btn-danger {
+    .delete-btn {
         background-color: var(--danger-color);
-        color: white;
     }
 
-    .btn-success {
-        background-color: var(--success-color);
-        color: white;
+    .action-btn:hover {
+        transform: translateY(-2px);
+        filter: brightness(1.1);
     }
 
-    /* Modal styles */
-    .modal {
-        display: none;
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        background-color: rgba(0, 0, 0, 0.5);
-    }
+    @media (max-width: 768px) {
+        .sidebar {
+            width: 80px;
+        }
 
-    .modal-content {
-        background-color: white;
-        width: 90%;
-        max-width: 500px;
-        margin: 2rem auto;
-        padding: 2rem;
-        border-radius: 10px;
-    }
+        .logo-container h2,
+        .menu-item span,
+        .nav-title {
+            display: none;
+        }
 
-    .form-group {
-        margin-bottom: 1rem;
-    }
+        .main-content {
+            margin-left: 80px;
+        }
 
-    .form-group label {
-        display: block;
-        margin-bottom: 0.5rem;
-    }
+        .menu-item {
+            justify-content: center;
+        }
 
-    .form-group input,
-    .form-group textarea {
-        width: 100%;
-        padding: 0.5rem;
-        border: 1px solid var(--light-color);
-        border-radius: 5px;
+        .menu-item img {
+            margin-right: 0;
+        }
     }
     </style>
 </head>
 
 <body>
     <div class="sidebar">
-        <div class="logo">
-            <img src="/api/placeholder/40/40" alt="Logo">
-            <h2>Admin Panel</h2>
+        <div class="logo-container">
+            <img src="{{ asset('assets/images/icon.png') }}" alt="Agriculture Logo">
+            <h2>Panel Admin</h2>
         </div>
-        <div class="menu-items">
-            <a href="#" class="active">
-                <i class="fas fa-home"></i>
-                <span>Dashboard</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-images"></i>
-                <span>Foto Kegiatan</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-box"></i>
-                <span>Produk</span>
-            </a>
-            <a href="#">
-                <i class="fas fa-cog"></i>
-                <span>Pengaturan</span>
-            </a>
+
+        <div class="nav-section">
+            <h3 class="nav-title">Menu</h3>
+            <div class="menu-item active">
+                <img src="/api/placeholder/20/20" alt="News Icon">
+                <span class="menu-title">Berita Pertanian</span>
+            </div>
+            <div class="menu-item">
+                <img src="/api/placeholder/20/20" alt="Photos Icon">
+                <span class="menu-title">Dokumentasi</span>
+            </div>
+            <div class="menu-item">
+                <img src="/api/placeholder/20/20" alt="Products Icon">
+                <span class="menu-title">Produk Tani</span>
+            </div>
         </div>
     </div>
 
     <div class="main-content">
-        <div class="header">
-            <div class="search-box">
-                <i class="fas fa-search"></i>
-                <input type="text" placeholder="Cari...">
-            </div>
-            <div class="user-profile">
-                <img src="/api/placeholder/40/40" alt="Profile">
-                <span>Admin</span>
-            </div>
+        <div class="dashboard-header">
+            <h2>Dashboard Pertanian</h2>
+            <a href="#" class="tambah-data">+ Tambah Data</a>
         </div>
 
-        <div class="cards">
-            <div class="card">
-                <h3>Total Produk</h3>
-                <p>150</p>
-            </div>
-            <div class="card">
-                <h3>Total Foto</h3>
-                <p>300</p>
-            </div>
-            <div class="card">
-                <h3>Pengunjung</h3>
-                <p>1,500</p>
-            </div>
-        </div>
-
-        <div class="table-container">
-            <div class="header">
-                <h2>Daftar Produk</h2>
-                <button class="btn btn-primary" onclick="openModal('add')">
-                    <i class="fas fa-plus"></i> Tambah Produk
-                </button>
-            </div>
+        <div class="content-box">
+            <h3>Daftar Berita Pertanian</h3>
             <table>
                 <thead>
                     <tr>
                         <th>No</th>
-                        <th>Nama Produk</th>
-                        <th>Kategori</th>
-                        <th>Harga</th>
-                        <th>Aksi</th>
+                        <th>Judul Berita</th>
+                        <th>Tanggal</th>
+                        <th>Deskripsi</th>
+                        <th>Foto</th>
+                        <th>Action</th>
                     </tr>
                 </thead>
-                <tbody id="productTableBody">
-                    <!-- Data will be populated by JavaScript -->
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Pertanian yang Ideal</td>
+                        <td>21-09-2025</td>
+                        <td>Pertanian Ideal adalah sistem pertanian yang berkelanjutan...</td>
+                        <td>
+                            <img src="/api/placeholder/50/50" alt="Foto Pertanian" style="border-radius: 8px;">
+                        </td>
+                        <td>
+                            <div class="action-buttons">
+                                <button class="action-btn edit-btn">Edit</button>
+                                <button class="action-btn delete-btn">Hapus</button>
+                            </div>
+                        </td>
+                    </tr>
                 </tbody>
             </table>
         </div>
     </div>
-
-    <!-- Modal Form -->
-    <div id="productModal" class="modal">
-        <div class="modal-content">
-            <h2 id="modalTitle">Tambah Produk</h2>
-            <form id="productForm">
-                <div class="form-group">
-                    <label for="productName">Nama Produk</label>
-                    <input type="text" id="productName" required>
-                </div>
-                <div class="form-group">
-                    <label for="productCategory">Kategori</label>
-                    <input type="text" id="productCategory" required>
-                </div>
-                <div class="form-group">
-                    <label for="productPrice">Harga</label>
-                    <input type="number" id="productPrice" required>
-                </div>
-                <div class="form-group">
-                    <label for="productImage">Gambar Produk</label>
-                    <input type="file" id="productImage" accept="image/*">
-                </div>
-                <div class="action-buttons">
-                    <button type="submit" class="btn btn-primary">Simpan</button>
-                    <button type="button" class="btn btn-danger" onclick="closeModal()">Batal</button>
-                </div>
-            </form>
-        </div>
-    </div>
-
-    <script>
-    // Sample data
-    let products = [{
-            id: 1,
-            name: 'Produk 1',
-            category: 'Kategori A',
-            price: 100000
-        },
-        {
-            id: 2,
-            name: 'Produk 2',
-            category: 'Kategori B',
-            price: 150000
-        },
-        {
-            id: 3,
-            name: 'Produk 3',
-            category: 'Kategori A',
-            price: 200000
-        }
-    ];
-
-    // Function to display products
-    function displayProducts() {
-        const tableBody = document.getElementById('productTableBody');
-        tableBody.innerHTML = '';
-
-        products.forEach((product, index) => {
-            const row = document.createElement('tr');
-            row.innerHTML = `
-                    <td>${index + 1}</td>
-                    <td>${product.name}</td>
-                    <td>${product.category}</td>
-                    <td>Rp ${product.price.toLocaleString()}</td>
-                    <td class="action-buttons">
-                        <button class="btn btn-success" onclick="openModal('edit', ${product.id})">
-                            <i class="fas fa-edit"></i>
-                        </button>
-                        <button class="btn btn-danger" onclick="deleteProduct(${product.id})">
-                            <i class="fas fa-trash"></i>
-                        </button>
-                    </td>
-                `;
-            tableBody.appendChild(row);
-        });
-    }
-
-    // Function to open modal
-    function openModal(type, id = null) {
-        const modal = document.getElementById('productModal');
-        const modalTitle = document.getElementById('modalTitle');
-        const form = document.getElementById('productForm');
-
-        modal.style.display = 'block';
-
-        if (type === 'edit' && id) {
-            const product = products.find(p => p.id === id);
-            modalTitle.textContent = 'Edit Produk';
-            document.getElementById('productName').value = product.name;
-            document.getElementById('productCategory').value = product.category;
-            document.getElementById('productPrice').value = product.price;
-            form.dataset.editId = id;
-        } else {
-            modalTitle.textContent = 'Tambah Produk';
-            form.reset();
-            delete form.dataset.editId;
-        }
-    }
-
-    // Function to close modal
-    function closeModal() {
-        const modal = document.getElementById('productModal');
-        modal.style.display = 'none';
-    }
-
-    // Function to handle form submission
-    document.getElementById('productForm').addEventListener('submit', function(e) {
-        e.preventDefault();
-
-        const formData = {
-            name: document.getElementById('productName').value,
-            category: document.getElementById('productCategory').value,
-            price: parseInt(document.getElementById('productPrice').value)
-        };
-
-        if (this.dataset.editId) {
-            // Edit existing product
-            const id = parseInt(this.dataset.editId);
-            const index = products.findIndex(p => p.id === id);
-            products[index] = {
-                ...products[index],
-                ...formData
-            };
-        } else {
-            // Add new product
-            const newId = products.length > 0 ? Math.max(...products.map(p => p.id)) + 1 : 1;
-            products.push({
-                id: newId,
-                ...formData
-            });
-        }
-
-        displayProducts();
-        closeModal();
-    });
-
-    // Function to delete product
-    function deleteProduct(id) {
-        if (confirm('Apakah Anda yakin ingin menghapus produk ini?')) {
-            products = products.filter(p => p.id !== id);
-            displayProducts();
-        }
-    }
-
-    // Initial display
-    displayProducts();
-    </script>
 </body>
 
 </html>
