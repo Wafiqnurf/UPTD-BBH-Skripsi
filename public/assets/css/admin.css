@@ -243,10 +243,15 @@ td:last-child {
     border-radius: 8px;
     font-weight: 500;
     transition: all 0.3s ease;
+    cursor: pointer;
 }
 
 .edit-btn {
     background-color: var(--primary-color);
+    list-style: none;
+    text-decoration: none;
+    color: #000;
+    font-size: 14px;
 }
 
 .delete-btn {

@@ -124,4 +124,4 @@ document.querySelectorAll('.btn-delete').forEach(button => {
 });
 </script>
 
-< /html>
+</html>

@@ -14,10 +14,10 @@ return new class extends Migration
         Schema::create('blogs', function (Blueprint $table) {
             $table->id();
             $table->string('judul')->nullable();
-            $table->string('tanggal')->nullable();
+            $table->date('tanggal')->nullable();
             $table->string('slug')->nullable();
             $table->string('image')->nullable();
-            $table->longText('desc')->nullable();
+            $table->text('desc')->nullable();
             $table->timestamps();
         });
     }

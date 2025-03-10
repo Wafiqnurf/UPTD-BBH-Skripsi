@@ -2,6 +2,9 @@
 namespace App\Http\Controllers;
 
 use App\Models\Blog;
+use Illuminate\Http\Request;
+use Illuminate\Support\Str;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class BlogController extends Controller
 {
@@ -91,24 +94,19 @@ class BlogController extends Controller
     {
         $artikel = Blog::find($id);
 
-        # Jika ada image baru
-        if ($request->hasFile('image')) {
-            $fileCheck = 'required|max:10000|mimes:jpg,jpeg,png';
-        } else {
-            $fileCheck = '';
-        }
-
+        // Tentukan aturan validasi
         $rules = [
             'judul'   => 'required',
             'tanggal' => 'required',
-            'image'   => $fileCheck,
+            'image'   => 'nullable|max:10000|mimes:jpg,jpeg,png,webp', // Ganti 'required' dengan 'nullable'
             'desc'    => 'required|min:20',
         ];
 
         $messages = [
             'judul.required'   => 'Judul wajib diisi!',
             'tanggal.required' => 'Tanggal wajib diisi!',
-            'image.required'   => 'Gambar wajib diisi!',
+            'image.max'        => 'Ukuran gambar maksimal 10MB!',
+            'image.mimes'      => 'Format gambar harus jpg, jpeg, png, atau webp!',
             'desc.required'    => 'Deskripsi wajib diisi!',
         ];
 
@@ -116,17 +114,16 @@ class BlogController extends Controller
 
         // Cek jika ada image baru
         if ($request->hasFile('image')) {
+            // Hapus gambar lama jika ada
             if (\File::exists('storage/artikel/' . $artikel->image)) {
-                \File::delete('storage/artikel/' . $request->old_image);
+                \File::delete('storage/artikel/' . $artikel->image);
             }
+            // Simpan gambar baru
             $fileName = time() . '.' . $request->image->extension();
             $request->file('image')->storeAs('public/artikel', $fileName);
-        }
-
-        if ($request->hasFile('image')) {
-            $checkFileName = $fileName;
         } else {
-            $checkFileName = $request->old_image;
+            // Jika tidak ada gambar baru, gunakan gambar lama
+            $fileName = $artikel->image;
         }
 
         // Artikel
@@ -157,7 +154,7 @@ class BlogController extends Controller
         $artikel->update([
             'judul'   => $request->judul,
             'tanggal' => $request->tanggal,
-            'image'   => $checkFileName,
+            'image'   => $fileName, // Gunakan nama file yang baru atau lama
             'desc'    => $dom->saveHTML(),
         ]);
 
