@@ -4,26 +4,17 @@
 <div class="main-content">
     <div class="dashboard-header">
         <h2>Tambah Data Baru</h2>
-        <a href="{{ route('blog') }}" class="tambah-data">Kembali</a>
+        <a href="{{ route('produk') }}" class="tambah-data">Kembali</a>
     </div>
 
     <div class="form-container">
-        <form action="{{ route('blog.store') }}" id="addDataForm" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('produk.store') }}" id="addDataForm" method="POST" enctype="multipart/form-data">
             @csrf
             <div class="form-group">
-                <label for="judul">Judul</label>
+                <label for="judul">Nama Produk</label>
                 <input type="text" id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror"
                     required value="{{ old('judul') }}">
                 @error('judul')
-                <div class="alert alert-danger">{{ $message }}</div>
-                @enderror
-            </div>
-
-            <div class="form-group">
-                <label for="tanggal">Tanggal</label>
-                <input type="date" id="tanggal" name="tanggal"
-                    class="form-control @error('tanggal') is-invalid @enderror" required value="{{ old('tanggal') }}">
-                @error('tanggal')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>

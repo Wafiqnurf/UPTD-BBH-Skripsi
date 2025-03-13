@@ -8,12 +8,13 @@
     </div>
 
     <div class="form-container">
-        <form action="{{ route('blog.store') }}" id="addDataForm" method="POST" enctype="multipart/form-data">
+        <form action="{{ route('blog.update', $artikel->id) }}" id="addDataForm" method="POST"
+            enctype="multipart/form-data">
             @csrf
             <div class="form-group">
                 <label for="judul">Judul</label>
                 <input type="text" id="judul" name="judul" class="form-control @error('judul') is-invalid @enderror"
-                    required value="{{ old('judul') }}">
+                    required value="{{ old('judul', $artikel->judul) }}">
                 @error('judul')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -22,7 +23,8 @@
             <div class="form-group">
                 <label for="tanggal">Tanggal</label>
                 <input type="date" id="tanggal" name="tanggal"
-                    class="form-control @error('tanggal') is-invalid @enderror" required value="{{ old('tanggal') }}">
+                    class="form-control @error('tanggal') is-invalid @enderror" required
+                    value="{{ old('tanggal', $artikel->tanggal) }}">
                 @error('tanggal')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -30,8 +32,8 @@
 
             <div class="form-group">
                 <label for="desc">Deskripsi</label>
-                <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" required
-                    value="{{ old('desc') }}"></textarea>
+                <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror"
+                    required>{!!  (strip_tags($artikel->desc)) !!}</textarea>
                 @error('desc')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
@@ -42,16 +44,23 @@
                 <div class="file-input-container">
                     <label class="file-input-label">
                         Pilih File
+                        <input type="hidden" name="old_image" value="{{ $artikel->image }}">
+                        <div>
+                            <img src="{{ asset('storage/artikel/' . $artikel->image) }}"
+                                style="max-width: 200px; margin-top: 10px;" alt="">
+                        </div>
                         <input type="file" id="image" name="image"
                             class="file-input @error('image') is-invalid @enderror" accept="image/*"
-                            onchange="handleFileSelect(event)" required>
+                            onchange="handleFileSelect(event)">
+
                         @error('image')
                         <div class="alert alert-danger">{{ $message }}</div>
                         @enderror
                     </label>
                     <span class="file-name" id="fileName"></span>
                 </div>
-                <img id="imagePreview" class="preview-image" style="max-width: 200px; margin-top: 10px;" alt="Preview">
+                <img id="imagePreview" class="preview-image" style="max-width: 200px; margin-top: 10px; display: none;"
+                    alt="Preview">
             </div>
 
             <div class="form-buttons">
