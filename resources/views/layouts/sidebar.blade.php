@@ -8,12 +8,8 @@
     <div class="nav-section">
         <h3 class="nav-title">Menu</h3>
         <div class="menu-item active">
-            <img src="{{ asset('assets/icons/news.png') }}" alt="News Icon">
-            <a href="{{route('blog')}}" class="menu-title">Berita Pertanian</a>
-        </div>
-        <div class="menu-item">
-            <img src="{{ asset('assets/icons/gallery.png') }}" alt="Photos Icon">
-            <span class="menu-title">Dokumentasi</span>
+            <img src="{{ asset('assets/icons/gallery.png') }}" alt="News Icon">
+            <a href="{{route('blog')}}" class="menu-title">Gallery Kegiatan</a>
         </div>
         <di class="menu-item">
             <img src="{{ asset('assets/icons/order.png') }}" alt="Products Icon">
