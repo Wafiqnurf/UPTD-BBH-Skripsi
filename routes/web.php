@@ -31,3 +31,7 @@ Route::post('/produk/store', [ProdukController::class, 'store'])->name('produk.s
 Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
 Route::post('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
 Route::post('/produk/destroy/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
+
+Auth::routes();
+
+Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
