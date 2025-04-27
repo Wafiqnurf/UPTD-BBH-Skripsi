@@ -32,7 +32,7 @@
     </script>
 </head>
 
-<body>
+<!-- <body>
 
     <nav class="navbar" aria-label="Main Navigation">
         <div class="navbar-logo">
@@ -129,7 +129,7 @@
         </div>
     </section>
 
-    <!-- Insert this section after the existing sections, before the gallery section -->
+
     <section class="commodities-modern" id="komoditas">
         <div class="commodities-container">
             <div class="section-header">
@@ -245,7 +245,6 @@
         <p></p>
         <div class="products-grid">
             <div class="product-card">
-                <span class="product-badge">Unggulan</span>
                 <img src="{{ asset('assets/images/product/alpukat.jpeg') }}" alt="Benih Alpukat" />
                 <h3>Benih Alpukat</h3>
                 <p>
@@ -253,7 +252,6 @@
                 </p>
             </div>
             <div class="product-card">
-                <span class="product-badge">Terlaris</span>
                 <img src="{{ asset('assets/images/product/melon.jpg') }}" alt="Golden Melon" />
                 <h3>Golden Melon</h3>
                 <p>
@@ -410,6 +408,6 @@
     </footer>
 
     <script src="{{ asset('assets/js/script.js') }}"></script>
-</body>
+</body> -->
 
 </html>

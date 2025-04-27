@@ -211,128 +211,32 @@
         </p>
         <p></p>
         <div class="products-grid">
+            @foreach ($produk as $produk)
             <div class="product-card">
-                <span class="product-badge">Unggulan</span>
-                <img src="{{ asset('assets/images/product/alpukat.jpeg') }}" alt="Benih Alpukat" />
-                <h3>Benih Alpukat</h3>
+                <img src="{{ asset('storage/produk/' . $produk->image) }}" alt="Benih Alpukat" />
+                <h3>{{ $produk->judul }}</h3>
                 <p>
-                    Benih Alpukat dengan produktivitas tinggi dan ketahanan penyakit
+                    {!! Str::limit(strip_tags($produk->desc), 100) !!}
                 </p>
             </div>
-            <div class="product-card">
-                <span class="product-badge">Terlaris</span>
-                <img src="{{ asset('assets/images/product/melon.jpg') }}" alt="Golden Melon" />
-                <h3>Golden Melon</h3>
-                <p>
-                    Melon dengan berwarna emas dengan rasa yang lebih manis dan premium
-                </p>
-            </div>
-            <div class="product-card">
-                <img src="{{ asset('assets/images/product/cabai.jpg') }}" alt="Cabai" />
-                <h3>Cabai</h3>
-                <p>Cabai dengan ukuran besar dan hasil panen melimpah</p>
-            </div>
-            <div class="product-card">
-                <img src="{{ asset('assets/images/product/product1.jpeg') }}" alt="Sayyyur Hidroponik" />
-                <h3>Sayur Hidroponik</h3>
-                <p>Sayuran dengan penanaman hidroponik yang fresh dan segar</p>
-            </div>
-            <div class="product-card">
-                <img src="{{ asset('assets/images/product/Anggrek.jpg') }}" alt="Tanaman Anggrek" />
-                <h3>Tanaman Anggrek</h3>
-                <p>
-                    Tanaman hias yang digemari oleh banyak orang untuk memperindah rumah
-                </p>
-            </div>
-            <div class="product-card">
-                <img src="{{ asset('assets/images/product/obat.jpeg') }}" alt="Tanaman Obat" />
-                <h3>Tanaman Obat</h3>
-                <p>
-                    Ada juga beberapa tanaman obat herbal yang dapat digunakan untuk
-                    mengobati penyakit
-                </p>
-            </div>
-            <div class="product-card">
-                <img src="{{ asset('assets/images/product/non anggrek.png') }}" alt="Tanaman Hias Non Anggrek" />
-                <h3>Tanaman Non Anggrek</h3>
-                <p>
-                    Ada juga tanaman hias non anggrek contohnya seperti aglonema dan
-                    lain - lain
-                </p>
-            </div>
-        </div>
+            @endforeach
     </section>
 
     <section id="galeri" class="gallery-container" aria-labelledby="gallery-title">
         <h2 class="gallery-title" id="gallery-title">Galeri Kegiatan</h2>
         <div class="gallery-grid" id="gallery-grid">
+            @foreach ($artikels as $artikel )
             <div class="gallery-item">
-                <img src="{{ asset('assets/images/Panen.jpg') }}" alt="Kegiatan Pembibitan" />
+                <img src="{{ asset('storage/artikel/' . $artikel->image) }}" alt="{{ $artikel->judul }}" />
                 <div class="gallery-overlay">
-                    <h3>Kunjungan dari Universitas</h3>
+                    <h3>{{ $artikel->judul }}</h3>
                     <p>
-                        Mempelajari berbagai varietas tanaman dan juga praktek
-                        perkembanganbiakan vegetatif
+                        {!! Str::limit(strip_tags($artikel->desc), 100) !!}
                     </p>
                     <button class="gallery-zoom-btn">Lihat Detail</button>
                 </div>
             </div>
-            <div class="gallery-item">
-                <img src="{{ asset('assets/images/Panen.jpg') }}" alt="Kunjungan Staff Ahli" />
-                <div class="gallery-overlay">
-                    <h3>Kunjungan Staff Ahli</h3>
-                    <p>
-                        Mendapat kunjungan dari Staf Ahli Gubernur Provinsi Jawa Barat
-                        Bidang Ekonomi dan Pembangunan sekaligus Plh. Asda I Dr. dr. H.
-                        Dodo Suhendar,M.M
-                    </p>
-                    <button class="gallery-zoom-btn">Lihat Detail</button>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('assets/images/kunjungan.png') }}" alt="Kunjungan Kepala Distanhor" />
-                <div class="gallery-overlay">
-                    <h3>Kunjungan Kepala Distanhor</h3>
-                    <p>
-                        Kepala Distanhorti Jabar Dadan Hidayat melakukan kunjungan kerja
-                        ke UPTD Balai Benih Hortikultura dalam rangka Monitoring dan
-                        Evaluasi pentingnya ketersediaan benih hortikultura yang
-                        berkualitas di Jawa Barat.
-                    </p>
-                    <button class="gallery-zoom-btn">Lihat Detail</button>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('assets/images/Panen.jpg') }}" alt="Panen Sayuran" />
-                <div class="gallery-overlay">
-                    <h3>Panen Hasil Pertanian</h3>
-                    <p>Memanen hasil sayuran hidroponik</p>
-                    <button class="gallery-zoom-btn">Lihat Detail</button>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('assets/images/pelatihan kuljar.png') }}" alt="Pelatihan Kultur Jaringan" />
-                <div class="gallery-overlay">
-                    <h3>Pelatihan Kultur Jaringan</h3>
-                    <p>
-                        Tim Laboratorium Kultur Jaringan hari ini kedatangan Dosen dari
-                        @unigal_ciamis yang akan melakukan kegiatan pelatihan kultur
-                        jaringan selama empat hari dimulai tanggal 5-10 September 2024.
-                    </p>
-                    <button class="gallery-zoom-btn">Lihat Detail</button>
-                </div>
-            </div>
-            <div class="gallery-item">
-                <img src="{{ asset('assets/images/magang.jpeg') }}" alt="Pelepasan anak magang" />
-                <div class="gallery-overlay">
-                    <h3>Pelepassan Anak Magang</h3>
-                    <p>
-                        Pelepasan anak - anak SMK yang telah selesai melakukan kegiatan
-                        magang di UPTD Balai Benih Hortikultura
-                    </p>
-                    <button class="gallery-zoom-btn">Lihat Detail</button>
-                </div>
-            </div>
+            @endforeach
         </div>
     </section>
 

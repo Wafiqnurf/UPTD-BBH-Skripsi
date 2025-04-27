@@ -327,15 +327,6 @@
                 </div>
                 <div class="error-message">Password minimal 8 karakter</div>
             </div>
-
-            <div class="remember-forgot">
-                <label class="remember-me">
-                    <input type="checkbox" name="remember">
-                    <span>Ingat saya</span>
-                </label>
-                <a href="#" class="forgot-password">Lupa Password?</a>
-            </div>
-
             <button type="submit" class="login-button">
                 <span class="button-text">Masuk</span>
                 <span class="spinner">
@@ -347,9 +338,6 @@
                 Login berhasil! Mengalihkan...
             </div>
 
-            <div class="register-link">
-                Belum punya akun? <a href="#">Daftar sekarang</a>
-            </div>
         </form>
     </div>
 
