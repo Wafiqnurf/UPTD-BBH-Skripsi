@@ -14,24 +14,28 @@ Auth::routes();
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
 
 // Dashboard
-Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
+Route::middleware('auth')->group(function () {
+    Route::get('/dashboard', [DashboardController::class, 'index'])->name('dashboard');
 
-// BLOG
-Route::get('/blog', [BlogController::class, 'index'])->name('blog');
-Route::get('/blog/create', [BlogController::class, 'create'])->name('blog.create');
-Route::post('/blog/store', [BlogController::class, 'store'])->name('blog.store');
-Route::get('/blog/edit/{id}', [BlogController::class, 'edit'])->name('blog.edit');
-Route::post('/blog/update/{id}', [BlogController::class, 'update'])->name('blog.update');
-Route::post('/blog/destroy/{id}', [BlogController::class, 'destroy'])->name('blog.destroy');
+    // BLOG routes group
+    Route::prefix('blog')->name('blog')->group(function () {
+        Route::get('/', [BlogController::class, 'index']);
+        Route::get('/create', [BlogController::class, 'create'])->name('.create');
+        Route::post('/store', [BlogController::class, 'store'])->name('.store');
+        Route::get('/edit/{id}', [BlogController::class, 'edit'])->name('.edit');
+        Route::post('/update/{id}', [BlogController::class, 'update'])->name('.update');
+        Route::post('/destroy/{id}', [BlogController::class, 'destroy'])->name('.destroy');
+    });
 
-// PRODUK
-Route::get('/produk', [ProdukController::class, 'index'])->name('produk');
-Route::get('/produk/create', [ProdukController::class, 'create'])->name('produk.create');
-Route::post('/produk/store', [ProdukController::class, 'store'])->name('produk.store');
-Route::get('/produk/edit/{id}', [ProdukController::class, 'edit'])->name('produk.edit');
-Route::post('/produk/update/{id}', [ProdukController::class, 'update'])->name('produk.update');
-Route::post('/produk/destroy/{id}', [ProdukController::class, 'destroy'])->name('produk.destroy');
-
-Auth::routes();
+    // PRODUK routes group
+    Route::prefix('produk')->name('produk')->group(function () {
+        Route::get('/', [ProdukController::class, 'index']);
+        Route::get('/create', [ProdukController::class, 'create'])->name('.create');
+        Route::post('/store', [ProdukController::class, 'store'])->name('.store');
+        Route::get('/edit/{id}', [ProdukController::class, 'edit'])->name('.edit');
+        Route::post('/update/{id}', [ProdukController::class, 'update'])->name('.update');
+        Route::post('/destroy/{id}', [ProdukController::class, 'destroy'])->name('.destroy');
+    });
+});
 
 Route::get('/home', [App\Http\Controllers\HomeController::class, 'index'])->name('home');
