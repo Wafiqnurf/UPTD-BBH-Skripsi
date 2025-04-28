@@ -137,3 +137,38 @@ const observer = new IntersectionObserver(
     }
 );
 productItems.forEach((item) => observer.observe(item));
+
+// Fungsi Untuk Produk
+document.addEventListener("DOMContentLoaded", function () {
+    // Product filtering functionality
+    const filterButtons = document.querySelectorAll(".filter-btn");
+    const products = document.querySelectorAll(".product-card");
+
+    filterButtons.forEach((button) => {
+        button.addEventListener("click", function () {
+            // Remove active class from all buttons
+            filterButtons.forEach((btn) => btn.classList.remove("active"));
+
+            // Add active class to clicked button
+            this.classList.add("active");
+
+            // Get filter value
+            const filterValue = this.getAttribute("data-filter");
+
+            // Filter products
+            if (filterValue === "all") {
+                products.forEach((product) => {
+                    product.style.display = "block";
+                });
+            } else {
+                products.forEach((product) => {
+                    if (product.getAttribute("data-category") === filterValue) {
+                        product.style.display = "block";
+                    } else {
+                        product.style.display = "none";
+                    }
+                });
+            }
+        });
+    });
+});

@@ -202,24 +202,65 @@
 
     <section id="produk" class="products" aria-labelledby="products-title">
         <h2 class="section-title" id="products-title">Produk Kami</h2>
-        <p>
+        <p class="section-description">
             Berbagai varietas unggul yang telah kami kembangkan untuk mendukung
             produktivitas pertanian dengan teknologi mutakhir dan inovasi
-            berkelanjutan.<br />
-            <span>Pemesanan dapat dilakukan melalui instagram ataupun Whatsapp
+            berkelanjutan.
+            <span class="order-info">Pemesanan dapat dilakukan melalui Instagram ataupun WhatsApp
                 kami</span>
         </p>
-        <p></p>
+        <div class="product-filters">
+            <button class="filter-btn active" data-filter="all">Semua</button>
+            <button class="filter-btn" data-filter="benih">Benih</button>
+            <button class="filter-btn" data-filter="tanaman-hias">Tanaman Hias</button>
+            <button class="filter-btn" data-filter="tanaman-obat">Tanaman Obat</button>
+            <button class="filter-btn" data-filter="sayuran">Sayuran</button>
+            <button class="filter-btn" data-filter="buah">Buah</button>
+        </div>
+
         <div class="products-grid">
-            @foreach ($produk as $produk)
-            <div class="product-card">
-                <img src="{{ asset('storage/produk/' . $produk->image) }}" alt="Benih Alpukat" />
-                <h3>{{ $produk->judul }}</h3>
-                <p>
-                    {!! Str::limit(strip_tags($produk->desc), 100) !!}
-                </p>
+            @foreach($produk as $produk)
+            <!-- Produk {{ $loop->iteration }} -->
+            <div class="product-card" data-category="{{ $produk->kategori ?? 'benih' }}">
+                <div class="product-image">
+                    <img src="{{ asset('storage/produk/' . $produk->image) }}" alt="{{ $produk->judul }}" />
+                    @if($produk->tags)
+                    <div class="product-tags">
+                        @php
+                        $tags = json_decode($produk->tags);
+                        @endphp
+                        @if(is_array($tags))
+                        @foreach($tags as $tag)
+                        @if($tag == 'baru')
+                        <span class="tag new">Baru</span>
+                        @elseif($tag == 'terlaris')
+                        <span class="tag bestseller">Terlaris</span>
+                        @elseif($tag == 'unggulan')
+                        <span class="tag featured">Unggulan</span>
+                        @endif
+                        @endforeach
+                        @endif
+                    </div>
+                    @endif
+                </div>
+                <div class="product-info">
+                    <h3 class="product-title">{{ $produk->judul }}</h3>
+                    <div class="product-price">
+                        <span class="current-price">Rp {{ number_format($produk->harga, 0, ',', '.') }}</span>
+                    </div>
+                    <div class="product-description">
+                        <p>{!! $produk->desc !!}</p>
+                    </div>
+                    <div class="product-cta">
+                        <a href="https://wa.me/+6281234567890?text=Halo, saya tertarik dengan produk {{ urlencode($produk->judul) }}"
+                            class="whatsapp-btn">
+                            <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
+                        </a>
+                    </div>
+                </div>
             </div>
             @endforeach
+        </div>
     </section>
 
     <section id="galeri" class="gallery-container" aria-labelledby="gallery-title">

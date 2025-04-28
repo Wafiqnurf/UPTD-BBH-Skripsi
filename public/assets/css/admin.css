@@ -192,6 +192,27 @@ body {
     font-weight: 600;
 }
 
+.filters-container {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 20px;
+}
+
+.filter-options {
+    display: flex;
+    gap: 10px;
+}
+
+.filter-form {
+    display: flex;
+    align-items: center;
+}
+
+#kategori-filter {
+    min-width: 200px;
+}
+
 table {
     width: 100%;
     border-collapse: separate;

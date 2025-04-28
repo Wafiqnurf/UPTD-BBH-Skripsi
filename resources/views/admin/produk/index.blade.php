@@ -8,13 +8,33 @@
     </div>
 
     <div class="content-box">
-        <h3>Daftar Produk</h3>
+        <div class="filters-container">
+            <h3>Daftar Produk</h3>
+            <div class="filter-options">
+                <form action="{{ route('produk') }}" method="GET" class="filter-form">
+                    <select name="kategori" id="kategori-filter" class="form-control" onchange="this.form.submit()">
+                        <option value="semua" {{ $selectedKategori == 'semua' ? 'selected' : '' }}>Semua Kategori
+                        </option>
+                        <option value="sayuran" {{ $selectedKategori == 'sayuran' ? 'selected' : '' }}>Sayuran</option>
+                        <option value="tanaman-obat" {{ $selectedKategori == 'tanaman-obat' ? 'selected' : '' }}>Tanaman
+                            Obat</option>
+                        <option value="tanaman-hias" {{ $selectedKategori == 'tanaman-hias' ? 'selected' : '' }}>Tanaman
+                            Hias</option>
+                        <option value="buah" {{ $selectedKategori == 'buah' ? 'selected' : '' }}>Buah</option>
+                        <option value="benih" {{ $selectedKategori == 'benih' ? 'selected' : '' }}>Benih</option>
+                    </select>
+                </form>
+            </div>
+        </div>>
         <table>
             <thead>
                 <tr>
                     <th>No</th>
                     <th>Nama Produk</th>
+                    <th>Kategori</th>
+                    <th>Harga</th>
                     <th>Deskripsi</th>
+                    <th>Tag</th>
                     <th>Foto</th>
                     <th>Action</th>
                 </tr>
@@ -26,7 +46,45 @@
                 <tr>
                     <td>{{ $i++ }}</td>
                     <td>{{ $produk->judul }}</td>
+                    <td>
+                        @if($produk->kategori == 'sayuran')
+                        Sayuran
+                        @elseif($produk->kategori == 'tanaman-obat')
+                        Tanaman Obat
+                        @elseif($produk->kategori == 'tanaman-hias')
+                        Tanaman Hias
+                        @elseif($produk->kategori == 'buah')
+                        Buah
+                        @elseif($produk->kategori == 'benih')
+                        Benih
+                        @else
+                        -
+                        @endif
+                    </td>
+                    <td>{{ 'Rp ' . number_format($produk->harga, 0, ',', '.') }}</td>
                     <td>{!! Str::limit(strip_tags($produk->desc), 100) !!}</td>
+                    <td>
+                        @php
+                        $tags = json_decode($produk->tags ?? '[]');
+                        @endphp
+                        @if(count($tags) > 0)
+                        @foreach($tags as $tag)
+                        <span class="tag-badge {{ $tag }}">
+                            @if($tag == 'baru')
+                            Baru
+                            @elseif($tag == 'terlaris')
+                            Terlaris
+                            @elseif($tag == 'unggulan')
+                            Unggulan
+                            @else
+                            {{ $tag }}
+                            @endif
+                        </span>
+                        @endforeach
+                        @else
+                        -
+                        @endif
+                    </td>
                     <td>
                         <img src="{{ asset('storage/produk/' . $produk->image) }}" width="100">
                     </td>

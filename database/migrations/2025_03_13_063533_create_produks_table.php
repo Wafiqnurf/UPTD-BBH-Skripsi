@@ -16,6 +16,9 @@ return new class extends Migration
             $table->string('judul')->nullable();
             $table->date('tanggal')->nullable();
             $table->string('slug')->nullable();
+            $table->string('kategori')->nullable();
+            $table->text('tags')->nullable();
+            $table->bigInteger('harga')->nullable();
             $table->string('image')->nullable();
             $table->text('desc')->nullable();
             $table->timestamps();
@@ -28,5 +31,7 @@ return new class extends Migration
     public function down(): void
     {
         Schema::dropIfExists('produks');
+        $table->dropColumn('harga');
+        $table->dropColumn('kategori');
     }
 };

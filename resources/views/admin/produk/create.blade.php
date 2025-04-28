@@ -19,11 +19,68 @@
                 @enderror
             </div>
 
+            <!-- Category Selection -->
+            <div class="form-group">
+                <label for="kategori">Kategori</label>
+                <select id="kategori" name="kategori" class="form-control @error('kategori') is-invalid @enderror"
+                    required>
+                    <option value="" disabled selected>Pilih Kategori</option>
+                    <option value="sayuran" {{ old('kategori') == 'sayuran' ? 'selected' : '' }}>Sayuran</option>
+                    <option value="tanaman-obat" {{ old('kategori') == 'tanaman-obat' ? 'selected' : '' }}>Tanaman Obat
+                    </option>
+                    <option value="tanaman-hias" {{ old('kategori') == 'tanaman-hias' ? 'selected' : '' }}>Tanaman Hias
+                    </option>
+                    <option value="buah" {{ old('kategori') == 'buah' ? 'selected' : '' }}>Buah</option>
+                    <option value="benih" {{ old('kategori') == 'benih' ? 'selected' : '' }}>Benih</option>
+                </select>
+                @error('kategori')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Price Field with Rupiah format -->
+            <div class="form-group">
+                <label for="harga">Harga (Rp)</label>
+                <div class="input-group">
+                    <div class="input-group-prepend">
+                        <span class="input-group-text">Rp</span>
+                    </div>
+                    <input type="text" id="harga" name="harga" class="form-control @error('harga') is-invalid @enderror"
+                        placeholder="0" value="{{ old('harga') }}" required onkeyup="formatRupiah(this)">
+                </div>
+                @error('harga')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
             <div class="form-group">
                 <label for="desc">Deskripsi</label>
                 <textarea id="desc" name="desc" class="form-control @error('desc') is-invalid @enderror" required
                     value="{{ old('desc') }}"></textarea>
                 @error('desc')
+                <div class="alert alert-danger">{{ $message }}</div>
+                @enderror
+            </div>
+
+            <!-- Tags Selection -->
+            <div class="form-group">
+                <label>Tags</label>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag_baru" value="baru"
+                        {{ is_array(old('tags')) && in_array('baru', old('tags')) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="tag_baru">Baru</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag_terlaris" value="terlaris"
+                        {{ is_array(old('tags')) && in_array('terlaris', old('tags')) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="tag_terlaris">Terlaris</label>
+                </div>
+                <div class="form-check">
+                    <input class="form-check-input" type="checkbox" name="tags[]" id="tag_unggulan" value="unggulan"
+                        {{ is_array(old('tags')) && in_array('unggulan', old('tags')) ? 'checked' : '' }}>
+                    <label class="form-check-label" for="tag_unggulan">Unggulan</label>
+                </div>
+                @error('tags')
                 <div class="alert alert-danger">{{ $message }}</div>
                 @enderror
             </div>
@@ -69,5 +126,32 @@ function handleFileSelect(event) {
 
     reader.readAsDataURL(file);
 }
+
+function formatRupiah(input) {
+    // Remove non-digit characters
+    let value = input.value.replace(/[^,\d]/g, '').toString();
+
+    // Format the number with thousand separators
+    value = value.replace(/\B(?=(\d{3})+(?!\d))/g, '.');
+
+    // Update the input value
+    input.value = value;
+}
+
+// Convert formatted value back to number before form submission
+document.getElementById('addDataForm').addEventListener('submit', function(e) {
+    let hargaInput = document.getElementById('harga');
+    // Convert from formatted Rupiah to plain number
+    let plainValue = hargaInput.value.replace(/\./g, '');
+
+    // Create a hidden input to store the plain number value
+    let hiddenInput = document.createElement('input');
+    hiddenInput.type = 'hidden';
+    hiddenInput.name = 'harga_plain';
+    hiddenInput.value = plainValue;
+
+    // Add the hidden input to the form
+    this.appendChild(hiddenInput);
+});
 </script>
 @endsection

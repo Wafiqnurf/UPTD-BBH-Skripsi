@@ -8,10 +8,20 @@ use Intervention\Image\ImageManagerStatic as Image;
 
 class ProdukController extends Controller
 {
-    public function index()
+    public function index(Request $request)
     {
+        $query = Produk::query();
+
+        // Filter by category if provided
+        if ($request->has('kategori') && $request->kategori != 'semua') {
+            $query->where('kategori', $request->kategori);
+        }
+
+        $produk = $query->get();
+
         return view('admin.produk.index', [
-            'produk' => Produk::all(),
+            'produk'           => $produk,
+            'selectedKategori' => $request->kategori ?? 'semua',
         ]);
     }
 
@@ -23,18 +33,26 @@ class ProdukController extends Controller
     public function store(Request $request)
     {
         $rules = [
-            'judul' => 'required',
-            'image' => 'required|max:10000|mimes:jpg,jpeg,png,webp',
-            'desc'  => 'required|min:20',
+            'judul'    => 'required',
+            'kategori' => 'required',
+            'harga'    => 'required',
+            'image'    => 'required|max:10000|mimes:jpg,jpeg,png,webp',
+            'desc'     => 'required|min:20',
+            'tags'     => 'nullable|array', // Add validation for tags
         ];
 
         $messages = [
-            'judul.required' => 'Judul wajib diisi!',
-            'image.required' => 'Gambar wajib diisi!',
-            'desc.required'  => 'Deskripsi wajib diisi!',
+            'judul.required'    => 'Judul wajib diisi!',
+            'kategori.required' => 'Kategori wajib diisi!',
+            'harga.required'    => 'Harga wajib diisi!',
+            'image.required'    => 'Gambar wajib diisi!',
+            'desc.required'     => 'Deskripsi wajib diisi!',
         ];
 
         $this->validate($request, $rules, $messages);
+
+        // Clean harga (price) value - remove thousand separators
+        $harga = str_replace('.', '', $request->harga);
 
         // Image
         $fileName = time() . '.' . $request->image->extension();
@@ -69,11 +87,17 @@ class ProdukController extends Controller
             }
         }
 
+        // Process tags
+        $tags = $request->has('tags') ? json_encode($request->tags) : json_encode([]);
+
         Produk::create([
-            'judul' => $request->judul,
-            'slug'  => Str::slug($request->judul, '-'),
-            'image' => $fileName,
-            'desc'  => $dom->saveHTML(),
+            'judul'    => $request->judul,
+            'slug'     => Str::slug($request->judul, '-'),
+            'kategori' => $request->kategori,
+            'harga'    => $harga, // Add price field
+            'image'    => $fileName,
+            'desc'     => $dom->saveHTML(),
+            'tags'     => $tags, // Add tags field
         ]);
 
         return redirect(route('produk'))->with('success_add', 'Data berhasil di simpan');
@@ -93,19 +117,27 @@ class ProdukController extends Controller
 
         // Tentukan aturan validasi
         $rules = [
-            'judul' => 'required',
-            'image' => 'nullable|max:10000|mimes:jpg,jpeg,png,webp', // Ganti 'required' dengan 'nullable'
-            'desc'  => 'required|min:20',
+            'judul'    => 'required',
+            'harga'    => 'required',
+            'kategori' => 'required',
+            'image'    => 'nullable|max:10000|mimes:jpg,jpeg,png,webp', // Ganti 'required' dengan 'nullable'
+            'desc'     => 'required|min:20',
+            'tags'     => 'nullable|array', // Add validation for tags
         ];
 
         $messages = [
-            'judul.required' => 'Judul wajib diisi!',
-            'image.max'      => 'Ukuran gambar maksimal 10MB!',
-            'image.mimes'    => 'Format gambar harus jpg, jpeg, png, atau webp!',
-            'desc.required'  => 'Deskripsi wajib diisi!',
+            'judul.required'    => 'Judul wajib diisi!',
+            'kategori.required' => 'Kategori wajib diisi!',
+            'harga.required'    => 'Harga wajib diisi!',
+            'image.max'         => 'Ukuran gambar maksimal 10MB!',
+            'image.mimes'       => 'Format gambar harus jpg, jpeg, png, atau webp!',
+            'desc.required'     => 'Deskripsi wajib diisi!',
         ];
 
         $this->validate($request, $rules, $messages);
+
+        // Clean harga (price) value - remove thousand separators
+        $harga = str_replace('.', '', $request->harga);
 
         // Cek jika ada image baru
         if ($request->hasFile('image')) {
@@ -146,10 +178,16 @@ class ProdukController extends Controller
             }
         }
 
+        // Process tags
+        $tags = $request->has('tags') ? json_encode($request->tags) : json_encode([]);
+
         $produk->update([
-            'judul' => $request->judul,
-            'image' => $fileName, // Gunakan nama file yang baru atau lama
-            'desc'  => $dom->saveHTML(),
+            'judul'    => $request->judul,
+            'kategori' => $request->kategori,
+            'harga'    => $harga,    // Add price field
+            'image'    => $fileName, // Gunakan nama file yang baru atau lama
+            'desc'     => $dom->saveHTML(),
+            'tags'     => $tags, // Add tags field
         ]);
 
         return redirect(route('produk'))->with('success_edit', 'Data berhasil diperbarui');
