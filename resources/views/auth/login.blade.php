@@ -307,15 +307,18 @@
             <p>Masuk ke Sistem Manajemen Pertanian</p>
         </div>
 
-        <form id="login-form" onsubmit="handleLogin(event)">
+        <form id="login-form" method="POST" action="{{ route('login') }}">
+            @csrf
             <div class="form-group">
-                <label for="username">Username atau Email</label>
+                <label for="email">Username atau Email</label>
                 <div class="input-group">
-                    <input type="text" id="username" name="username" required autocomplete="username"
-                        placeholder="Masukkan username atau email">
+                    <input type="text" id="email" name="email" required autocomplete="email"
+                        placeholder="Masukkan username atau email" value="{{ old('email') }}">
                     <i class="icon fas fa-user"></i>
                 </div>
-                <div class="error-message">Username tidak valid</div>
+                @error('email')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
 
             <div class="form-group">
@@ -323,21 +326,32 @@
                 <div class="input-group">
                     <input type="password" id="password" name="password" required autocomplete="current-password"
                         placeholder="Masukkan password" minlength="8">
-                    <i class="icon fas fa-eye password-toggle"></i>
+                    <i class="icon fas fa-eye password-toggle" id="toggle-password"></i>
                 </div>
-                <div class="error-message">Password minimal 8 karakter</div>
+                @error('password')
+                <div class="error-message">{{ $message }}</div>
+                @enderror
             </div>
-            <button type="submit" class="login-button">
+
+            <div class="form-group remember-me">
+                <label>
+                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
+                    <span>Ingat saya</span>
+                </label>
+            </div>
+
+            <button type="submit" class="login-button" id="login-button">
                 <span class="button-text">Masuk</span>
                 <span class="spinner">
                     <i class="fas fa-circle-notch fa-spin"></i>
                 </span>
             </button>
 
+            @if(session('status'))
             <div class="success-message">
-                Login berhasil! Mengalihkan...
+                {{ session('status') }}
             </div>
-
+            @endif
         </form>
     </div>
 
