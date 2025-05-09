@@ -59,7 +59,7 @@
                         class="fab fa-instagram"></i></a>
             </div>
         </div>
-        <div class="footer-section">
+        <!-- <div class="footer-section">
             <h3>Newsletter</h3>
             <form>
                 <input type="email" placeholder="Email Anda" style="width: 100%; padding: 10px; margin-bottom: 10px" />
@@ -67,7 +67,7 @@
                     Berlangganan
                 </button>
             </form>
-        </div>
+        </div> -->
     </footer>
 
     <script src="{{ asset('assets/js/script.js') }}"></script>

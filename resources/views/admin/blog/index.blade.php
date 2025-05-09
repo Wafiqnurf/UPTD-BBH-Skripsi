@@ -28,7 +28,7 @@
                     <td>{{ $i++ }}</td>
                     <td>{{ $artikel->judul }}</td>
                     <td>{{ $artikel->tanggal }}</td>
-                    <td>{!! Str::limit(strip_tags($artikel->desc), 100) !!}</td>
+                    <td>{!! Str::limit(strip_tags($artikel->desc),1000) !!}</td>
                     <td>
                         <img src="{{ asset('storage/artikel/' . $artikel->image) }}" width="100">
                     </td>

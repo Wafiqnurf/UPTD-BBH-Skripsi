@@ -25,7 +25,7 @@
                 Ketahanan Pangan Indonesia
             </p>
             <div class="hero-cta">
-                <a href="#layanan" class="btn btn-primary">Jelajahi Layanan</a>
+                <a href="#komoditas" class="btn btn-primary">Jelajahi Layanan</a>
                 <a href="#kontak" class="btn btn-secondary">Hubungi Kami</a>
             </div>
         </div>
@@ -272,7 +272,7 @@
                 <div class="gallery-overlay">
                     <h3>{{ $artikel->judul }}</h3>
                     <p>
-                        {!! Str::limit(strip_tags($artikel->desc), 100) !!}
+                        {!! Str::limit(strip_tags($artikel->desc),10000) !!}
                     </p>
                     <button class="gallery-zoom-btn">Lihat Detail</button>
                 </div>
