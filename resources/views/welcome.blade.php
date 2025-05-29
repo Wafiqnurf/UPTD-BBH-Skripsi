@@ -252,7 +252,7 @@
                         <p>{!! $produk->desc !!}</p>
                     </div>
                     <div class="product-cta">
-                        <a href="https://wa.me/+6281234567890?text=Halo, saya tertarik dengan produk {{ urlencode($produk->judul) }}"
+                        <a href="https://wa.me/+6281313105267?text=Halo, saya tertarik dengan produk {{ urlencode($produk->judul) }}"
                             class="whatsapp-btn">
                             <i class="fab fa-whatsapp"></i> Pesan via WhatsApp
                         </a>
