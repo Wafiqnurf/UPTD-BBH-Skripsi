@@ -25,7 +25,7 @@ class BlogController extends Controller
         $rules = [
             'judul'   => 'required',
             'tanggal' => 'required',
-            'image'   => 'required|max:10000|mimes:jpg,jpeg,png,webp',
+            'image'   => 'required|max:20000|mimes:jpg,jpeg,png,webp',
             'desc'    => 'required|min:20',
         ];
 
@@ -98,7 +98,7 @@ class BlogController extends Controller
         $rules = [
             'judul'   => 'required',
             'tanggal' => 'required',
-            'image'   => 'nullable|max:10000|mimes:jpg,jpeg,png,webp', // Ganti 'required' dengan 'nullable'
+            'image'   => 'nullable|max:20000|mimes:jpg,jpeg,png,webp', // Ganti 'required' dengan 'nullable'
             'desc'    => 'required|min:20',
         ];
 
