@@ -25,7 +25,7 @@
                     </select>
                 </form>
             </div>
-        </div>>
+        </div>
         <table>
             <thead>
                 <tr>
