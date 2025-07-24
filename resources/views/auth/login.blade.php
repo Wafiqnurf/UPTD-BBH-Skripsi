@@ -332,14 +332,6 @@
                 <div class="error-message">{{ $message }}</div>
                 @enderror
             </div>
-
-            <div class="form-group remember-me">
-                <label>
-                    <input type="checkbox" name="remember" id="remember" {{ old('remember') ? 'checked' : '' }}>
-                    <span>Ingat saya</span>
-                </label>
-            </div>
-
             <button type="submit" class="login-button" id="login-button">
                 <span class="button-text">Masuk</span>
                 <span class="spinner">
